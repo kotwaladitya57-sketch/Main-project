@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Navbar from './Navbar'
+import Navbar from './TempNavbar'
 import { Link, useNavigate } from 'react-router-dom'
 import CartContext from './CartContext'
 import { FaShoppingCart } from "react-icons/fa";

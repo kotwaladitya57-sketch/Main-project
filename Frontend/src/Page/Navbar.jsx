@@ -7,7 +7,7 @@ import { MdRoundaboutRight } from "react-icons/md";
 import { IoIosCart } from "react-icons/io";
 import { FaShoppingBag } from "react-icons/fa";
 
-const Navbar = () => {
+const TempNavbar = () => {
   const [inputvalue, setInputValue] = React.useState("");
   const [searchedProducts, setSearchedProducts] = React.useState([]);
   const { cart, products, isLoggedIn, logout, user } = useContext(CartContext);
@@ -59,4 +59,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default TempNavbar;
