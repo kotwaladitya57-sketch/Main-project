@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Navbar from './TempNavbar'
+import Navbar from './Navbar'
 import CartContext from './Cartcontext'
 import { FaOpencart } from "react-icons/fa6";
 import { FaIndianRupeeSign } from "react-icons/fa6";
