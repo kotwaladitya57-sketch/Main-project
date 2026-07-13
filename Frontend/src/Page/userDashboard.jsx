@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "./TempNavbar";
+import Navbar from "./Navbar";
 
 const UserDashboard = () => {
     const [products, setProducts] = useState([

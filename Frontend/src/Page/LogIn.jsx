@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import Navbar from './TempNavbar'
+import Navbar from './Navbar'
 import { FaPaperPlane } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
