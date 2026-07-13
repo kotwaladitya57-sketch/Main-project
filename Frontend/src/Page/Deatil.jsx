@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import Navbar from './navbar'
+import Navbar from './Navbar'
 import { FaStar, FaShoppingCart } from "react-icons/fa";
 import CartContext from './CartContext';
 import products from './data.js';
