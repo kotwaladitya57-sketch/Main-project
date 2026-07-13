@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Navbar from './Navbar'
-import CartContext from './Cartcontext'
+import CartContext from './CartContext'
 import { FaOpencart } from "react-icons/fa6";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
