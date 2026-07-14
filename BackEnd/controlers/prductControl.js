@@ -33,7 +33,7 @@ const updatedProduct = async (req, res) => {
         if (!token) {
             return res.status(401).send("No Token Provided");
         }
-        jwt.verify(token, "this is your key")
+        jwt.verify(token, process.env.JWT_SECRET || "this is your key")
 
         let id = req.query.id;
         let data = req.body;
@@ -50,7 +50,7 @@ const deleteProduct = async (req, res) => {
     let id = req.query.id;
     let deletedproduct = await product.findByIdAndDelete(id);
     if (!deletedproduct) {
-        return res.send("user not found");
+        return res.send("Product not found");
     }
     res.send("Product deleted");
 };

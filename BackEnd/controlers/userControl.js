@@ -17,12 +17,12 @@ const verifyToken = async (req, res) => {
         if (!header) {
             return res.status(401).send("No Header Provided");
         }
-        let {userId} = jwt.verify(header.split(" ")[1], "this is your key")
-        let user = await user.findById(userId);
+        let {userId} = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET || "this is your key")
+        let foundUser = await user.findById(userId);
         // if (!user) {
         //     return res.status(401).send("Unauthorized");
         // }
-        res.status(200).send(user);
+        res.status(200).send(foundUser);
     } catch (err) {
         res.status(401).send("Unauthorized");
     }
@@ -31,9 +31,8 @@ const verifyToken = async (req, res) => {
 const registerUser = async (req, res) => {
     try {
         let result = validationResult(req);
-        // if (!result.isEmpty()) return res.status(400).json({ errors: result.array() });
-        let errors = result.errors;
-        if (errors.length != 0) {
+        if (!result.isEmpty()) {
+            let errors = result.array();
             let err = errors.map((er) => { return er.msg; })
             return res.status(400).send(err[0]);
         }
@@ -60,6 +59,13 @@ const registerUser = async (req, res) => {
 };
 const LogIn = async (req, res) => {
     try {
+        let result = validationResult(req);
+        if (!result.isEmpty()) {
+            let errors = result.array();
+            let err = errors.map((er) => { return er.msg; })
+            return res.status(400).send(err[0]);
+        }
+
         let data = req.body;
         let existingUser = await user.findOne({ email: data.email });
         if (!existingUser) {
@@ -70,7 +76,7 @@ const LogIn = async (req, res) => {
             return res.status(401).send("wrong password");
         }
 
-        let token = jwt.sign({ userId: existingUser._id }, "this is your key")
+        let token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET || "this is your key")
 
         res.status(200).send({ user: existingUser, token });
     } catch (err) {

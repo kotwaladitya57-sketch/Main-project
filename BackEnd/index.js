@@ -11,7 +11,8 @@ const productrouter = require("./Routers/productrouter");
 const server = express();
 
 server.use(cors({
-    origin: "http://localhost:5173"
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true
 }));
 
 server.use(express.json())
@@ -34,4 +35,5 @@ mongoose.connect(process.env.DB_URL)
     });
 
 
-server.listen(3000, () => console.log("server is running on port 3000"))
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`server is running on port ${PORT}`))

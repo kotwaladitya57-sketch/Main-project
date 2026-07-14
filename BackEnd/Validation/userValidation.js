@@ -29,5 +29,19 @@ let validateUser =
             .withMessage("age must be a number")
             .isInt({ min: 1, max: 100 })
             .withMessage("age must be between 1 and 100")
-    ]
-module.exports = validateUser;
+    ];
+
+let validateLogin =
+    [
+        body("email")
+            .notEmpty()
+            .withMessage("email is required")
+            .isEmail()
+            .withMessage("invalid email"),
+
+        body("password")
+            .notEmpty()
+            .withMessage("password is required")
+    ];
+
+module.exports = { validateUser, validateLogin };

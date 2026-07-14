@@ -13,7 +13,7 @@ function checkLogin(req, res, next) {
         if (!token) {
             return res.status(401).send("No Token Provided");
         }
-        jwt.verify(token, "this is your key")
+        jwt.verify(token, process.env.JWT_SECRET || "this is your key")
 
         next();
     }
