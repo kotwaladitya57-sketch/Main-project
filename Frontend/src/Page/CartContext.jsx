@@ -41,7 +41,8 @@ const CartProvider = ({ children }) => {
 
     // Fetch products from backend
     useEffect(() => {
-        axios.get("http://localhost:3000/product")
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        axios.get(`${API_BASE_URL}/product`)
             .then(res => {
                 // Normalize data to match components' expectations (e.g., title, thumbnail, id)
                 const normalized = res.data.map(item => ({

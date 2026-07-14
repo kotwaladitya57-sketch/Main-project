@@ -22,7 +22,8 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3000/users/register", formData)
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        axios.post(`${API_BASE_URL}/users/register`, formData)
             .then((response) => {
                 console.log(response.data);
                 toast.success("Registration successful!", {
@@ -40,8 +41,8 @@ function Register() {
             })
             .catch((err) => {
                 console.error(err.response);
-                // alert("Registration failed! " + (err.response?.data || err.message));
-                toast.error('Registration Failed', {
+                const errorMsg = err.response?.data || "Registration Failed";
+                toast.error(errorMsg, {
                     position: "top-center",
                     autoClose: 2000,
                     hideProgressBar: false,

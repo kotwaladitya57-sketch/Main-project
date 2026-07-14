@@ -25,7 +25,8 @@ const Login = () => {
             return alert("Email and Password are required");
         }
 
-        axios.post("http://localhost:3000/users/login", data)
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        axios.post(`${API_BASE_URL}/users/login`, data)
             .then((response) => {
                 console.log("Login Success:", response.data);
                 login(response.data);
@@ -44,9 +45,9 @@ const Login = () => {
                 navigate('/product');
             })
             .catch((err) => {
-                console.error(err.message);
-                const errorMsg = err.response?.data || err.message || "Something went wrong";
-                toast.error('LogIn Failed', {
+                console.error(err);
+                const errorMsg = err.response?.data || "LogIn Failed";
+                toast.error(errorMsg, {
                     position: "top-center",
                     autoClose: 2000,
                     hideProgressBar: false,
