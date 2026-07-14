@@ -45,7 +45,7 @@ function Register() {
             });
         }
 
-        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "https://main-project-lh90.onrender.com";
 
         // Convert age to number before sending to backend
         const payload = {
