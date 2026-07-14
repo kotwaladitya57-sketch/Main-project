@@ -22,7 +22,7 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "https://main-project-lh90.onrender.com";
         axios.post(`${API_BASE_URL}/users/register`, formData)
             .then((response) => {
                 console.log(response.data);
