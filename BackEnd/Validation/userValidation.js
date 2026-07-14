@@ -17,10 +17,8 @@ let validateUser =
         body("password")
             .notEmpty()
             .withMessage("password is required")
-            .isLength({ min: 8 })
-            .withMessage("password must be at least 8 characters")
-            .isStrongPassword()
-            .withMessage("password must contain at least one uppercase, one lowercase, one number and one special character"),
+            .isLength({ min: 5 })
+            .withMessage("password must be at least 5 characters"),
 
         body("age")
             .notEmpty()

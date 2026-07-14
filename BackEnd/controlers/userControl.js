@@ -44,10 +44,6 @@ const registerUser = async (req, res) => {
             return res.status(400).send("user already exists");
         }
 
-        if (data.password.length < 6) {
-            return res.status(400).send("password must be at least 6 characters");
-        }
-
         let hashPassward = bcrypt.hashSync(data.password, 10);
 
         let newuser = await user.create({ ...data, password: hashPassward });
