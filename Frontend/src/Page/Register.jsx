@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Slide, toast } from 'react-toastify';
+import { Slide, ToastContainer, toast } from 'react-toastify';
 import { FaUser, FaEnvelope, FaPaperPlane, FaCalendarAlt } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
+
 
 function Register() {
     const navigate = useNavigate();
@@ -21,55 +22,34 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Frontend validation — show clear messages to user
-        if (!formData.name || !formData.email || !formData.password || !formData.age) {
-            return toast.error("Please fill all fields", {
-                position: "top-center", autoClose: 3000, theme: "dark", transition: Slide,
-            });
-        }
-        if (formData.name.length < 3 || formData.name.length > 20) {
-            return toast.error("Name must be between 3 and 20 characters", {
-                position: "top-center", autoClose: 3000, theme: "dark", transition: Slide,
-            });
-        }
-        if (formData.password.length < 5) {
-            return toast.error("Password must be at least 5 characters", {
-                position: "top-center", autoClose: 3000, theme: "dark", transition: Slide,
-            });
-        }
-        const ageNum = parseInt(formData.age, 10);
-        if (isNaN(ageNum) || ageNum < 1 || ageNum > 100) {
-            return toast.error("Age must be a number between 1 and 100", {
-                position: "top-center", autoClose: 3000, theme: "dark", transition: Slide,
-            });
-        }
-
         const API_BASE_URL = import.meta.env.VITE_API_URL || "https://main-project-lh90.onrender.com";
-
-        // Convert age to number before sending to backend
-        const payload = {
-            ...formData,
-            age: ageNum,
-        };
-
-        axios.post(`${API_BASE_URL}/users/register`, payload)
+        axios.post(`${API_BASE_URL}/users/register`, formData)
             .then((response) => {
-                console.log("Registration success:", response.data);
-                toast.success("Registration successful! Please login.", {
+                console.log(response.data);
+                toast.success("Registration successful!", {
                     position: "top-left",
                     autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
                     theme: "dark",
                     transition: Slide,
                 });
-                setTimeout(() => navigate('/login'), 2100);
+                navigate('/Login');
             })
             .catch((err) => {
-                console.error("Registration error:", err.response);
-                const errorMsg = err.response?.data || err.message || "Registration Failed";
-                toast.error(String(errorMsg), {
+                console.error(err.response);
+                const errorMsg = err.response?.data || "Registration Failed";
+                toast.error(errorMsg, {
                     position: "top-center",
-                    autoClose: 3000,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
                     theme: "dark",
                     transition: Slide,
                 });
@@ -86,57 +66,25 @@ function Register() {
 
                     <div className="input-container">
                         <FaUser className="icon" size={20} />
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Enter your name (3–20 chars)"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
+                        <input type="text" name="name" placeholder="Enter your name" value={formData.name} onChange={handleChange} required />
                     </div>
 
                     <div className="input-container">
                         <FaEnvelope className="icon" size={20} />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter a valid email (e.g. abc@gmail.com)"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
+                        <input type="email" name="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} required />
                     </div>
 
                     <div className="input-container">
                         <FaCalendarAlt className="icon" size={20} />
-                        <input
-                            type="number"
-                            name="age"
-                            placeholder="Enter your age (1–100)"
-                            min="1"
-                            max="100"
-                            value={formData.age}
-                            onChange={handleChange}
-                            required
-                        />
+                        <input type="number" name="age" placeholder="Enter your age" value={formData.age} onChange={handleChange} required />
                     </div>
 
                     <div className="input-container">
                         <CiLock className="icon" size={22} />
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password (min 5 characters)"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
+                        <input type="password" name="password" placeholder="Enter your password" value={formData.password} onChange={handleChange} required />
                     </div>
 
-                    <button type="submit" id="btn">
-                        Register <FaPaperPlane style={{ marginLeft: "8px", verticalAlign: "middle" }} />
-                    </button>
+                    <button type="submit" id="btn">Register <FaPaperPlane style={{ marginLeft: "8px", verticalAlign: "middle" }} /></button>
                 </form>
             </div>
         </div>
