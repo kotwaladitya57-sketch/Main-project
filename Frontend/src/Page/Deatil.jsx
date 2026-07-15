@@ -3,19 +3,22 @@ import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import { FaStar, FaShoppingCart } from "react-icons/fa";
 import CartContext from './CartContext';
-import products from './data.js';
+import fallbackProducts from './data.js';
 
 const Deatil = () => {
     const { id } = useParams()
-    const { addToCart, products } = useContext(CartContext);
+    const { addToCart, products: contextProducts } = useContext(CartContext);
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        // Find product in the context's product list
-        // id from params is a string (Mongo _id)
-        const foundProduct = products.find(p => p.id === id);
-        setData(foundProduct);
-    }, [id, products]);
+        const allProducts = [...contextProducts, ...fallbackProducts];
+        const foundProduct = allProducts.find((product) => {
+            const productId = product.id || product._id;
+            return String(productId) === String(id);
+        });
+
+        setData(foundProduct || null);
+    }, [id, contextProducts]);
 
     if (!data) {
         return (
@@ -46,7 +49,7 @@ const Deatil = () => {
                     </div>
                     <div className="detail-price">${data.price}</div>
                     <p className="detail-desc">{data.description}</p>
-                    <button className='btn-buy' style={{ maxWidth: '300px' }} onClick={(e) => addToCart(e, data)}>
+                    <button className='btn-buy detail-cart-button' onClick={(e) => addToCart(e, data)}>
                         Add to Cart <FaShoppingCart size={22} />
                     </button>
                 </div>

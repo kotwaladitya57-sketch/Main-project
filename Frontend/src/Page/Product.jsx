@@ -17,8 +17,9 @@ const Products = () => {
             <div className="products-wrapper">
                 {
                     products.map((ele) => {
+                        const productId = ele.id || ele._id;
                         return (
-                            <Link to={`/product/${ele.id}`} key={ele.id} className='product-card'>
+                            <Link to={`/product/${productId}`} key={productId} className='product-card'>
                                 <div className="product-image-container">
                                     <img className='product-image' src={ele.thumbnail} alt={ele.title} />
                                 </div>

@@ -12,20 +12,27 @@ const About = () => {
         centerPadding: "60px",
         slidesToShow: 3,
         speed: 500,
-    };
-
-    const slideStyle = {
-        background: "linear-gradient(135deg, #13151a 0%, #1c1e26 100%)",
-        height: "400px",
-        borderRadius: "20px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-        border: "1px solid rgba(255,255,255,0.05)",
-        transition: "transform 0.3s ease",
-        margin: "0 10px",
-        overflow: "hidden"
+        dots: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    centerMode: false,
+                    slidesToShow: 2,
+                    centerPadding: "0px",
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    centerMode: false,
+                    slidesToShow: 1,
+                    centerPadding: "0px",
+                    arrows: false,
+                }
+            }
+        ]
     };
 
     return (
@@ -41,28 +48,28 @@ const About = () => {
             <div className="slider-container">
                 <Slider {...settings}>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://i.pinimg.com/474x/90/5d/b2/905db292d68125b10d5fc6166d08dfe4.jpg" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "15px" }} src="https://i.pinimg.com/474x/90/5d/b2/905db292d68125b10d5fc6166d08dfe4.jpg" alt="" />
                             </a>
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://st3.depositphotos.com/35997962/37666/i/450/depositphotos_376666036-stock-photo-makeup-brushes-colorful-powder-explosion.jpg" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "15px" }} src="https://st3.depositphotos.com/35997962/37666/i/450/depositphotos_376666036-stock-photo-makeup-brushes-colorful-powder-explosion.jpg" alt="" />
                             </a>
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://i.pinimg.com/736x/c2/58/50/c2585078c338867a53a52a5dfcc20af0.jpg" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "15px" }} src="https://i.pinimg.com/736x/c2/58/50/c2585078c338867a53a52a5dfcc20af0.jpg" alt="" />
                             </a>
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a
                                 href="https://images.jdmagicbox.com/v2/comp/bangalore/v3/080pxx80.xx80.211211004820.q3v3/catalogue/the-organic-world-kalyan-nagar-bangalore-organic-product-dealers-x81rohshzg-250.jpg" target="_blank" rel="noopener noreferrer" style={{ display: "block", width: "100%", height: "100%" }}>
                                 <img src="https://images.jdmagicbox.com/v2/comp/bangalore/v3/080pxx80.xx80.211211004820.q3v3/catalogue/the-organic-world-kalyan-nagar-bangalore-organic-product-dealers-x81rohshzg-250.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "15px" }} />
@@ -70,7 +77,7 @@ const About = () => {
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://images.unsplash.com/photo-1520975916090-3105956dac38" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                             <img
                                 src="https://images.unsplash.com/photo-1520975916090-3105956dac38"
@@ -80,7 +87,7 @@ const About = () => {
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://images.unsplash.com/photo-1596462502278-27bfdc403348" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img
                                     src="https://images.unsplash.com/photo-1596462502278-27bfdc403348"
@@ -91,7 +98,7 @@ const About = () => {
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://images.unsplash.com/photo-1542838132-92c53300491e" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img
                                     src="https://images.unsplash.com/photo-1542838132-92c53300491e"
@@ -102,7 +109,7 @@ const About = () => {
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://i.pinimg.com/736x/1d/f5/07/1df507c28060cc973d4c299a0688e551.jpg" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img
                                     src="https://i.pinimg.com/736x/1d/f5/07/1df507c28060cc973d4c299a0688e551.jpg"
@@ -113,7 +120,7 @@ const About = () => {
                         </div>
                     </div>
                     <div>
-                        <div style={slideStyle}>
+                        <div className="about-slide-card">
                             <a href="https://images.unsplash.com/photo-1607082350899-7e105aa886ae" target="_blank" rel="noopener noreferrer" style={{ width: "100%", height: "100%" }}>
                                 <img
                                     src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae"
