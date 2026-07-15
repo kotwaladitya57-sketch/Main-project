@@ -23,7 +23,6 @@ const CartProvider = ({ children }) => {
         }
     });
 
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem("user");
         try {
@@ -33,6 +32,7 @@ const CartProvider = ({ children }) => {
             return null;
         }
     });
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token") || !!localStorage.getItem("user"));
 
     // Save cart to localStorage whenever it changes
     useEffect(() => {

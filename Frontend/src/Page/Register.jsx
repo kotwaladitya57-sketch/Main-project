@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import { FaUser, FaEnvelope, FaPaperPlane, FaCalendarAlt } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
+import CartContext from "./CartContext";
 
 
 function Register() {
     const navigate = useNavigate();
+    const { login } = useContext(CartContext);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -26,6 +28,7 @@ function Register() {
         axios.post(`${API_BASE_URL}/users/register`, formData)
             .then((response) => {
                 console.log(response.data);
+                login(response.data);
                 toast.success("Registration successful!", {
                     position: "top-left",
                     autoClose: 2000,
@@ -37,11 +40,11 @@ function Register() {
                     theme: "dark",
                     transition: Slide,
                 });
-                navigate('/Login');
+                navigate('/product');
             })
             .catch((err) => {
-                console.error(err.response);
-                const errorMsg = err.response?.data || "Registration Failed";
+                console.error(err);
+                const errorMsg = err.response?.data || err.message || "Registration Failed";
                 toast.error(errorMsg, {
                     position: "top-center",
                     autoClose: 2000,

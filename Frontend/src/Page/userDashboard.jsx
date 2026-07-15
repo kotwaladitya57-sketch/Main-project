@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "./Navbar";
+import CartContext from "./CartContext";
+import { FaEdit, FaPlus, FaShoppingBag, FaTrash, FaUserCircle } from "react-icons/fa";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const UserDashboard = () => {
+    const { user, cart } = useContext(CartContext);
     const [products, setProducts] = useState([
-        { id: 1, name: "iPhone 14", price: 799 },
-        { id: 2, name: "Nike Shoes", price: 120 },
+        { id: 1, name: "Chocolate Truffle Cake", price: 799 },
+        { id: 2, name: "Strawberry Cupcakes", price: 120 },
     ]);
 
-    const [form, setForm] = useState({ name: "", price: "" });
+    const [form, setForm] = useState({ name: "", price: "", image: "" });
     const [editId, setEditId] = useState(null);
 
     const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        const { name, value, files } = e.target;
+        setForm({ ...form, [name]: files?.[0]?.name || value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (editId) {
-            const updated = products.map((p) =>
-                p.id === editId ? { ...p, ...form } : p
+            const updated = products.map((product) =>
+                product.id === editId ? { ...product, ...form } : product
             );
             setProducts(updated);
             setEditId(null);
@@ -28,161 +33,124 @@ const UserDashboard = () => {
             setProducts([...products, newProduct]);
         }
 
-        setForm({ name: "", price: "" });
+        setForm({ name: "", price: "", image: "" });
     };
 
     const handleDelete = (id) => {
-        setProducts(products.filter((p) => p.id !== id));
+        setProducts(products.filter((product) => product.id !== id));
     };
 
     const handleEdit = (product) => {
-        setForm(product);
+        setForm({
+            name: product.name,
+            price: product.price,
+            image: product.image || "",
+        });
         setEditId(product.id);
     };
 
     return (
         <div>
             <Navbar />
-            <div
-                style={{
-                    padding: "30px",
-                    maxWidth: "800px",
-                    margin: "auto",
-                    fontFamily: "Arial",
-                    background: "#9cbff3",
-                    minHeight: "100vh",
-                }}
-            >
-                <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-                    🛒 User Dashboard
-                </h2>
+            <main className="dashboard-page">
+                <section className="dashboard-hero">
+                    <div>
+                        <span className="dashboard-eyebrow">Account</span>
+                        <h1>Welcome{user?.name ? `, ${user.name.split(" ")[0]}` : ""}</h1>
+                        <p>Manage your custom product list and keep your cart activity in one clean place.</p>
+                    </div>
 
-                {/* FORM */}
-                <form
-                    onSubmit={handleSubmit}
-                    style={{
-                        background: "#ffffff",
-                        padding: "15px",
-                        borderRadius: "10px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                        marginBottom: "20px",
-                        display: "flex",
-                        gap: "10px",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                    }}
-                >
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Product name"
-                        value={form.name}
-                        onChange={handleChange}
-                        required
-                        style={{
-                            padding: "8px",
-                            borderRadius: "5px",
-                            border: "1px solid #ccc",
-                        }}
-                    />
-
-                    <input
-                        type="number"
-                        name="price"
-                        placeholder="Price"
-                        value={form.price}
-                        onChange={handleChange}
-                        required
-                        style={{
-                            padding: "8px",
-                            borderRadius: "5px",
-                            border: "1px solid #ccc",
-                        }}
-                    />
-                    <input
-                        type="file"
-                        name="image"
-                        onChange={handleChange}
-                        required
-                        style={{
-                            padding: "8px",
-                            borderRadius: "5px",
-                            border: "1px solid #ccc",
-                        }}
-                    />
-
-                    <button
-                        type="submit"
-                        style={{
-                            padding: "8px 15px",
-                            border: "none",
-                            borderRadius: "5px",
-                            background: editId ? "#ffa500" : "#28a745",
-                            color: "#ffffff",
-                            cursor: "pointer",
-                        }}
-                    >
-                        {editId ? "Update" : "Add"}
-                    </button>
-                </form>
-
-                {/* PRODUCT LIST */}
-                <div>
-                    {products.map((p) => (
-                        <div
-                            key={p.id}
-                            style={{
-                                background: "#030000",
-                                padding: "15px",
-                                marginBottom: "12px",
-                                borderRadius: "10px",
-                                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}
-                        >
-                            <div>
-                                <strong style={{ fontSize: "16px" }}>{p.name}</strong>
-                                <p style={{ margin: "5px 0", color: "#555" }}>
-                                    ${p.price}
-                                </p>
-                            </div>
-
-                            <div>
-                                <button
-                                    onClick={() => handleEdit(p)}
-                                    style={{
-                                        padding: "6px 12px",
-                                        marginRight: "8px",
-                                        border: "none",
-                                        borderRadius: "5px",
-                                        background: "#007bff",
-                                        color: "#fff",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    Edit
-                                </button>
-
-                                <button
-                                    onClick={() => handleDelete(p.id)}
-                                    style={{
-                                        padding: "6px 12px",
-                                        border: "none",
-                                        borderRadius: "5px",
-                                        background: "#dc3545",
-                                        color: "#fff",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </div>
+                    <div className="dashboard-profile">
+                        <FaUserCircle size={44} />
+                        <div>
+                            <strong>{user?.name || "Guest User"}</strong>
+                            <span>{user?.email || "No email available"}</span>
                         </div>
+                    </div>
+                </section>
+
+                <section className="dashboard-stats">
+                    <div>
+                        <span>{products.length}</span>
+                        <p>Dashboard Items</p>
+                    </div>
+                    <div>
+                        <span>{cart.length}</span>
+                        <p>Cart Items</p>
+                    </div>
+                    <div>
+                        <span>{editId ? "Edit" : "Add"}</span>
+                        <p>Current Mode</p>
+                    </div>
+                </section>
+
+                <section className="dashboard-panel">
+                    <div className="dashboard-panel-header">
+                        <div>
+                            <h2>{editId ? "Update Product" : "Add Product"}</h2>
+                            <p>Create a quick product entry for your dashboard.</p>
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="dashboard-form">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Product name"
+                            value={form.name}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <input
+                            type="number"
+                            name="price"
+                            placeholder="Price"
+                            value={form.price}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <input
+                            type="file"
+                            name="image"
+                            onChange={handleChange}
+                            required={!editId}
+                        />
+
+                        <button type="submit">
+                            {editId ? <FaEdit /> : <FaPlus />}
+                            {editId ? "Update" : "Add"}
+                        </button>
+                    </form>
+                </section>
+
+                <section className="dashboard-list">
+                    {products.map((product) => (
+                        <article key={product.id} className="dashboard-item">
+                            <div className="dashboard-item-icon">
+                                <FaShoppingBag />
+                            </div>
+
+                            <div className="dashboard-item-info">
+                                <strong>{product.name}</strong>
+                                <p><FaIndianRupeeSign size={14} />{product.price}</p>
+                                {product.image && <span>{product.image}</span>}
+                            </div>
+
+                            <div className="dashboard-actions">
+                                <button type="button" className="dashboard-edit" onClick={() => handleEdit(product)}>
+                                    <FaEdit /> Edit
+                                </button>
+
+                                <button type="button" className="dashboard-delete" onClick={() => handleDelete(product.id)}>
+                                    <FaTrash /> Delete
+                                </button>
+                            </div>
+                        </article>
                     ))}
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
     );
 };
